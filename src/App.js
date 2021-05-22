@@ -1,48 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
-import Home from './components/Home'
-import About from './components/About'
-import Contact from './components/Contact'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
+class App extends React.Component {
+   constructor() {
+      super();
+		// Thuoc tinh data: mot mang rong
+      this.state = {
+         data: []
+      }
+      
+      // this.setStateHandler = this.setStateHandler.bind(this);
+   };
+  setStateHandler = () =>{
+      const item = "setState..." // Tao ra 1 item moi = setState
+      // const myArray = this.state.data.slice(); // Copy state cu
+      const myArray = [...this.state.data];
+	    myArray.push(item); // Day item moi vao array cu
+      this.setState({data: myArray}) // setState data moi cho array
+  };
 
-export default function App() {
-  return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/src/components/Home.jsx">Home</Link>
-          </li>
-          <li>
-            <Link to="/src/components/About.jsx">About</Link>
-          </li>
-          <li>
-            <Link to="/src/components/Contact.jsx">Contact</Link>
-          </li>
-        </ul>
-
-        <hr />
-
-        {/*
-          A <Switch> looks through all its children <Route>
-          elements and renders the first one whose path
-          matches the current URL. Use a <Switch> any time
-          you have multiple routes, but you want only one
-          of them to render at a time
-        */}
-        <Switch>
-          <Route exact path="/src/components/Home.jsx">
-            <Home />
-          </Route>
-          <Route path="/src/components/About.jsx">
-            <About />
-          </Route>
-          <Route path="/src/components/Contact.jsx">
-            <Contact />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
+  forceUpdateHandler = () => {
+    this.forceUpdate();
+ };
+ findDomNodeHandler = () => {
+  //  Tim the 'myDiv' set color = green
+  const myDiv = document.getElementById('myDiv');
+  ReactDOM.findDOMNode(myDiv).style.color = 'green';
 }
+   render() {
+      return (
+         <div>
+           {/* Khi click thi goi function setStateHandler() */}
+            <button onClick = {this.setStateHandler}>SET STATE</button>
+            {/* In ra du lieu moi */}
+            <h4>State Array: {this.state.data}</h4> 
+            <button onClick = {this.forceUpdateHandler}>FORCE UPDATE</button>
+            <h4>Random number: {Math.random()}</h4>
+            <button onClick = {this.findDomNodeHandler}>FIND DOME NODE</button>
+            <div id = "myDiv">NODE</div>
+         </div>
+      );
+   }
+}
+export default App;
